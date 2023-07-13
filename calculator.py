@@ -10,9 +10,11 @@ variables = {
 
 
 commands = {}
+cmds = []
 # fill 'commands' dict with functions from commands package 
 for c in modules:
     m = import_module("commands." + c)
+    cmds.append(m)
     commands.update({m.name : m.fn})
 
 
@@ -20,12 +22,12 @@ for c in modules:
 while True:
     s = input()
     
-    for i in commands.keys():
-        if i in s:
-            commands[i](s, variables)
+    for key in commands.keys():
+        if key in s:
+            commands[key](s, variables, cmds)
             break
     else:
-        commands["calc"](s, variables)
+        commands["calc"](s, variables, cmds)
 
 
 

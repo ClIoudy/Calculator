@@ -5,7 +5,7 @@ args = [""]
 
 operators = ["+", "-", "/", "*"]
 
-def calc(s, variables):
+def calc(s, variables, commands):
     if s == "":
         return
     groups = group(s)
