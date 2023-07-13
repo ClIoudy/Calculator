@@ -17,7 +17,7 @@ for c in modules:
     cmds.append(m)
     commands.update({m.name : m.fn})
 
-
+import_module("os").system("cls")
 
 
 
