@@ -9,10 +9,10 @@ def assign(s, variables):
         print("invalid input format")
         return
     if not s[2].isdigit():
-        print("'" + s[2] + "'" + " is not s number")
+        print("'" + s[2] + "'" + " is not a number")
         return
     if s[1].isdigit():
-        print("'" + s[1] + "'" + " is not s valid variable name")
+        print("'" + s[1] + "'" + " is not a valid variable name")
         return
     
     if s[1] in variables:

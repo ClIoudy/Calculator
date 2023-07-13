@@ -15,12 +15,10 @@ def calc(s, variables):
     except:
         result = "invalid expression"
     print(result)
+    return result
 
     
 fn = calc
-
-
-
 
 def group(s):
     s = s.replace(" ", "")
@@ -31,9 +29,9 @@ def group(s):
 
 def parse(groups):
     if len(groups) <= 1:
-        return int(groups[0])
+        return float(groups[0])
 
-    right = int(groups[len(groups) - 1])
+    right = float(groups[len(groups) - 1])
     op = groups[len(groups) - 2]
 
     match(op):
@@ -45,7 +43,7 @@ def parse(groups):
             result = left - right 
             
         case "*":
-            left = int(groups[len(groups) - 3])
+            left = float(groups[len(groups) - 3])
             right =  right * left
             groups = groups[:len(groups) - 2]
             groups[len(groups) - 1] = right
@@ -53,7 +51,7 @@ def parse(groups):
             result = parse(groups)
         
         case "/":
-            left = int(groups[len(groups) - 3])
+            left = float(groups[len(groups) - 3])
             right =  right / left
             groups = groups[:len(groups) - 2] 
             groups[len(groups) - 1] = right
@@ -63,7 +61,6 @@ def parse(groups):
 
     return result
         
-
 
 # mend(s) turns expressions like 2a (with say a = 3) into 2 * 3
    
@@ -77,20 +74,22 @@ def mend(groups, variables):
             results = findall(r"(\d+)|(\w+)", s)
             l = [list(element)[0] for element in [filter(None, element) for element in results]]
             a = []
-            a.append(l[0])
-            for element in l[-1:]:
-                a.append("*")   
+            for element in l:
                 if not element.isdigit():
-                    ...
-                    for e in resolve_vars(element, variables):
+                    element = resolve_vars(element, variables)
+                    for e in element:
                         a.append(e)
-                    continue
-                a.append(element) 
-            for e in a:
+                    
+                else:
+                    a.append(element)
+                a.append("*")
+            for e in a[:-1]:
                 r.append(e)
     return r
 
 def resolve_vars(s, variables):
+    if s.isdigit():
+        return s
     l = []
     keys = sorted(variables.keys(), key=len)
     keys.reverse()
@@ -98,10 +97,16 @@ def resolve_vars(s, variables):
     for key in keys:
         a = s.find(key)
         while a != -1:
-            
             l.append(variables[s[a:a + len(key)]])
             l.append("*")
             s = s.replace(key, "", 1)
             a = s.find(key)
-    return l[:-1]
+    l = l[:-1]
+    return l
 
+variables = {
+    "pi": "3.14",
+    "a": "5",
+    "b": "2",
+    "x": "100",
+}
