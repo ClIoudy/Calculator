@@ -6,7 +6,8 @@ args = [""]
 operators = ["+", "-", "/", "*"]
 
 def calc(s, variables):
-    
+    if s == "":
+        return
     groups = group(s)
     groups = mend(groups, variables)
     try:
@@ -17,6 +18,9 @@ def calc(s, variables):
 
     
 fn = calc
+
+
+
 
 def group(s):
     s = s.replace(" ", "")
@@ -60,6 +64,7 @@ def parse(groups):
     return result
         
 
+
 # mend(s) turns expressions like 2a (with say a = 3) into 2 * 3
    
 def mend(groups, variables):
@@ -99,16 +104,4 @@ def resolve_vars(s, variables):
             s = s.replace(key, "", 1)
             a = s.find(key)
     return l[:-1]
-
-# variables = {
-#     "pi": "3.14",
-#     "a": "5",
-#     "b": "2",
-#     "x": "100",
-# }
-  
-# expr = "2b"
-# r = calc(expr, variables)
-# print(r)
-
 
