@@ -2,10 +2,10 @@ from importlib import import_module
 from commands import __all__ as modules 
 import math
 
+
 variables = {
     "PI" : math.pi,
     "ans" : 0,
-    "res": 0
 }
 
 
@@ -19,6 +19,8 @@ for c in modules:
 
 
 
+
+
 while True:
     s = input()
     
@@ -28,8 +30,3 @@ while True:
             break
     else:
         commands["calc"](s, variables, cmds)
-
-
-
-
-

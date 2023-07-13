@@ -1,21 +1,28 @@
 from re import findall
 name = "calc"
 description = "calculates expression"
-args = [""]
+# args = [""]
 
 operators = ["+", "-", "/", "*"]
 
-def calc(s, variables, commands):
+def calc(s, variables, commands):    
     if s == "":
         return
+    if s == "ans":
+        print(variables["ans"])
+        return variables["ans"]
     groups = group(s)
     groups = mend(groups, variables)
     try:
         result = parse(groups)
     except:
         result = "invalid expression"
-    print(result)
-    return result
+        
+    
+    undo_list = [c.undo_list for c in commands if c.name == "undo"][0]
+    undo_list.append(("ans", variables["ans"]))
+    variables["ans"] = result
+    print(variables["ans"])
 
     
 fn = calc

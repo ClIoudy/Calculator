@@ -1,6 +1,6 @@
 name = "assign"
 description = "assigns variable' - 'assign 'variable' 'value'"
-arguments = ["see description"]
+# arguments = ["see description"]
 
 def assign(s, variables, commands):
     s = s.split(" ")
@@ -20,11 +20,16 @@ def assign(s, variables, commands):
         print("'" + s[1] + "'" + " is not a valid variable name")
         return
     
+    undo_list = [c.undo_list for c in commands if c.name == "undo"][0]
     if s[1] in variables:
+        undo_list.append((s[1], variables[s[1]]))
         print("variable " + s[1] + " has been replaced, " + variables[s[1]] + " -> " + s[2])
     else:
+        undo_list.append((s[1]))
         print("new variable " + s[1] + " = 2")
 
+
+    
     return variables.update({s[1] : s[2]})
 
 
@@ -32,3 +37,6 @@ def assign(s, variables, commands):
 fn = assign
 
 variables = {}
+
+
+
